@@ -1,0 +1,128 @@
+<template>
+
+	<div id="app">
+	
+		<Progress value="16.88">
+      <!-- <template v-slot:footer>
+        <b>goood</b>
+      </template>-->
+    </Progress>
+    <Progress strokeColor="#FF00AA" value="16.88">
+      <template v-slot:footer>
+        <b>More Color</b>
+      </template>
+    </Progress>
+
+    <Progress :radius="50" :strokeWidth="10" value="86.12">
+      <template v-slot:footer>
+        <b>Bolder & Bigger One</b>
+      </template>
+    </Progress>
+
+    <Progress
+      :transitionDuration="5000"
+      :radius="50"
+      :strokeWidth="10"
+      value="86.12"
+    >
+      <template v-slot:footer>
+        <b>Slow One</b>
+      </template>
+    </Progress>
+
+    <Progress
+      :transitionDuration="5000"
+      :radius="55"
+      :strokeWidth="10"
+      value="86.12567"
+    >
+      <template v-slot:footer>
+        <b>More Precise</b>
+      </template>
+    </Progress>
+
+    <Progress :transitionDuration="0" :radius="55" :strokeWidth="10" :value="value2">
+      <div class="content">hello</div>
+      <template v-slot:footer>
+        <b>More Precise</b>
+      </template>
+    </Progress>
+		
+		
+		
+		
+		
+		
+		<input type="text" v-model="value2" id="test2" />
+	
+	</div>
+</template>
+
+
+
+
+
+
+<script>
+
+import Progress from 'easy-circular-progress'
+//Vue.use(ProgressBar)
+
+    export default {
+        components: {
+            Progress
+        },
+
+        data() {
+            return {
+				value2: 3,
+				value_1:0
+            }
+        }
+    }
+	
+	var p = 0;
+	function setP(){
+				p += 1;
+				if(p==101){
+					p = 0;
+				}
+				var ele = document.getElementById("test2")
+				ele.value = p;
+				var event = new Event('input', {
+					bubbles: true,
+					cancelable: true,
+				});
+				ele.dispatchEvent(event);
+	}
+	var t = setInterval(setP, 500);
+	//clearInterval(t);
+
+
+</script>
+
+
+<style lang="scss">
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  height: 100vh;
+  color: #fff;
+  background: #3e423a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+</style>
+
+
+
+
+
+

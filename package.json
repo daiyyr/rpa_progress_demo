@@ -1,0 +1,61 @@
+{
+  "_from": "vue-spinner-component",
+  "_id": "vue-spinner-component@1.0.5",
+  "_inBundle": false,
+  "_integrity": "sha512-wsib3lXLtwW9bPdfrU39plQo8bDj/KzwkTAHmVjmuWAvLZfpqQnzjTuSCiT1HYWyWpEcQBy2YIE+dE9jrYg6Mg==",
+  "_location": "/vue-spinner-component",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "vue-spinner-component",
+    "name": "vue-spinner-component",
+    "escapedName": "vue-spinner-component",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vue-spinner-component/-/vue-spinner-component-1.0.5.tgz",
+  "_shasum": "c2647b2c05fa716bcffadf5f2c462496d706049b",
+  "_spec": "vue-spinner-component",
+  "_where": "C:\\Users\\Teemo",
+  "author": {
+    "name": "Sergey Loysha",
+    "email": "sergey@loysha.com"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "easy-circular-progress": "^1.0.4",
+    "vue": "^2.2.1",
+    "vue-router": "^2.4.0",
+    "vuejs-progress-bar": "^1.2.2"
+  },
+  "deprecated": false,
+  "description": "[Demo](http://sergeyloysha.github.io/vue-spinner-component/)",
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-loader": "^6.0.0",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^3.0.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^5.0.1",
+    "vue-loader": "^11.1.4",
+    "vue-template-compiler": "^2.2.1",
+    "vuex": "^2.3.1",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.2.0"
+  },
+  "name": "vue-spinner-component",
+  "private": false,
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot"
+  },
+  "version": "1.0.5"
+}

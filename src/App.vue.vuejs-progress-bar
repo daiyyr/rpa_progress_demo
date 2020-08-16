@@ -1,0 +1,89 @@
+<template>
+
+	<div id="app">
+	
+		<ProgressBar :options="options" :value="value" />
+		<input type="text" v-model="value" id="test2" style="display:none"/>
+	
+	</div>
+	
+
+
+
+</template>
+
+
+
+
+
+
+<script>
+
+import ProgressBar from 'vuejs-progress-bar'
+//Vue.use(ProgressBar)
+
+    export default {
+        components: {
+            ProgressBar
+        },
+
+        data() {
+            return {
+                options: {
+				  text: {
+					color: '#FFFFFF',
+					shadowEnable: true,
+					shadowColor: '#000000',
+					fontSize: 14,
+					fontFamily: 'Helvetica',
+					dynamicPosition: false,
+					hideText: false
+				  },
+				  progress: {
+					color: 'rgb(174,253,55)',
+					backgroundColor: 'rgb(97,116,51)'
+				  },
+				  layout: {
+					height: 330,
+					width: 330,
+					verticalTextAlign: 200,
+					horizontalTextAlign: 200,
+					zeroOffset: 10,
+					strokeWidth: 8,
+					progressPadding: 0,
+					type: 'circle'
+				  }
+				},
+				value: 0
+            }
+        }
+    }
+	
+	var p = 0;
+	function setP(){
+				p += 1;
+				if(p==101){
+					p = 0;
+				}
+				var ele = document.getElementById("test2")
+				ele.value = p;
+				var event = new Event('input', {
+					bubbles: true,
+					cancelable: true,
+				});
+				ele.dispatchEvent(event);
+	}
+	var t = setInterval(setP, 50);
+	//clearInterval(t);
+
+
+</script>
+
+
+
+
+
+
+
+
+
