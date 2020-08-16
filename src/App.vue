@@ -7,7 +7,7 @@
   padding: 100px; 
   padding-top: 100px;
   
-    width: 200px;
+    width: 350px;
     text-align: left;
   
   ">
@@ -16,6 +16,8 @@
 			<b>BC Code: 209972</b>
 			<br/>
 			<b>Account: {{Account}}</b>
+			<br/>
+			<b>Invoice Number: {{Account}}/17082020</b>
 		</div>
 		
 		<br/>
@@ -182,7 +184,7 @@ import Progress from 'easy-circular-progress'
 
 
 	var blur = 0.15;
-	var rpa_time = 1000 * 120;  //1000 * 120
+	var rpa_time = 1000 * 30;  //1000 * 120
 	var ocr_time = 1000 * 10;
 	var edms_time = 1000 * 8;
 	var sms_time = 1000 * 15;
@@ -258,11 +260,11 @@ import Progress from 'easy-circular-progress'
 				}, 1000);
 				setTimeout(function(){
 					setElement("edmstime", 500);
-					setElement("edmspercent", 0);
+					setElement("edmspercent", 1);
 				}, 1000);
 				setTimeout(function(){
 					setElement("smstime", 500);
-					setElement("smspercent", 0);
+					setElement("smspercent", 1);
 				}, 1000);
 				setTimeout(function(){
 					setElement("bankingtime", 500);
@@ -294,7 +296,7 @@ import Progress from 'easy-circular-progress'
 				setElement("bankingpercent", 1);
 				setTimeout(function(){
 					setElement("bankingtime", bankingtime_2);
-					setElement("bankingpercent", 50);
+					setElement("bankingpercent", 0);
 				}, 1000);
 			}
 			
