@@ -1,16 +1,16 @@
 <template>
 
-	<div id="app" style="display: block">
+	<div id="app" style="display: block; height: 1200px">
 		
 		<div style=" margin: auto;
   width: 50%;
-  padding: 100px; 
-  padding-top: 100px;
+  padding: 30px; 
   
     width: 350px;
     text-align: left;
-  
   ">
+			<b>Total Scanned: 613434</b>
+			<br/>
 			<b>BC ID: 686</b>
 			<br/>
 			<b>BC Code: 209972</b>
@@ -27,21 +27,20 @@
 		 :transitionDuration="rpatime"
 		  :radius="50"
 		  :strokeWidth="10"
-		  :value="rpapercent" style="margin:20px"
+		  :value="rpapercent" style="margin:20px; display: block"
 		>
 		  <template v-slot:footer>
-			<b>RPA Scanning</b>
+			<b>Data Capture</b>
 		  </template>
 		</Progress>
 		<input type="range" max="100000000000" v-model="rpatime" id="rpatime" style="display:none"/>
 		<input type="text" v-model="rpapercent" id="rpapercent" style="display:none"/>
 		
 		<Progress 
-			strokeColor="#FF00AA" 
 			:transitionDuration="ocrtime"
 			  :radius="50"
 			  :strokeWidth="10"
-			  :value="ocrpercent" style="margin:20px"
+			  :value="ocrpercent" style="margin:20px; display: block"
 			>
 		  <template v-slot:footer>
 			<b>OCR</b>
@@ -55,7 +54,7 @@
 		  :transitionDuration="edmstime"
 		  :radius="50"
 		  :strokeWidth="10"
-		  :value="edmspercent" style="margin:20px"
+		  :value="edmspercent" style="margin:20px; display: block"
 			>
 		  <template v-slot:footer>
 			<b>EDMS</b>
@@ -69,10 +68,10 @@
 		  :transitionDuration="smstime"
 		  :radius="50"
 		  :strokeWidth="10"
-		  :value="smspercent" style="margin:20px"
+		  :value="smspercent" style="margin:20px; display: block"
 		>
 		  <template v-slot:footer>
-			<b>SMS</b>
+			<b>Core</b>
 		  </template>
 		</Progress>
 		<input type="range" max="100000000000" v-model="smstime" id="smstime" style="display:none"/>
@@ -80,10 +79,11 @@
 
 
 		<Progress
+		   strokeColor="#FF00AA" 
 		  :transitionDuration="bankingtime"
 		  :radius="50"
 		  :strokeWidth="10"
-		  :value="bankingpercent" style="margin:20px"
+		  :value="bankingpercent" style="margin:20px; display: block"
 		>
 		  <template v-slot:footer>
 			<b>Banking</b>
@@ -184,7 +184,7 @@ import Progress from 'easy-circular-progress'
 
 
 	var blur = 0.15;
-	var rpa_time = 1000 * 30;  //1000 * 120
+	var rpa_time = 1000 * 120;  //1000 * 120
 	var ocr_time = 1000 * 10;
 	var edms_time = 1000 * 8;
 	var sms_time = 1000 * 15;
@@ -293,7 +293,7 @@ import Progress from 'easy-circular-progress'
 			if (!banking_started && now > sms_end){
 				banking_started = true;
 				setElement("bankingtime", 500);
-				setElement("bankingpercent", 1);
+				setElement("bankingpercent", 0);
 				setTimeout(function(){
 					setElement("bankingtime", bankingtime_2);
 					setElement("bankingpercent", 0);
