@@ -9,20 +9,27 @@
     width: 350px;
     text-align: left;
   ">
-			<b>Total Scanned: 613434</b>
+			<b>Total Scanned: {{totalscan}}</b>
 			<br/>
-			<b>BC ID: 686</b>
+			<b>BC ID: {{bcid}}</b>
 			<br/>
-			<b>BC Code: 209972</b>
+			<b>BC Code: {{bccode}}</b>
 			<br/>
-			<b>Account: {{Account}}</b>
+			<b>Account: {{wateraccount}}</b>
 			<br/>
-			<b>Invoice Number: {{Account}}/17082020</b>
+			<b>Invoice Number: {{invoicenumber}}</b>
 		</div>
 		
 		<br/>
 		
 		<div>
+		
+		<input type="text" v-model="totalscan" id="totalscan" style="display:none"/>
+		<input type="text" v-model="bcid" id="bcid" style="display:none"/>
+		<input type="text" v-model="bccode" id="bccode" style="display:none"/>
+		<input type="text" v-model="wateraccount" id="wateraccount" style="display:none"/>
+		<input type="text" v-model="invoicenumber" id="invoicenumber" style="display:none"/>
+		
 		<Progress 
 		 :transitionDuration="rpatime"
 		  :radius="50"
@@ -116,7 +123,7 @@
 
 
 <script>
-
+var messageFile = 'monitor.message';
 import Progress from 'easy-circular-progress'
 //Vue.use(ProgressBar)
 
@@ -140,7 +147,12 @@ import Progress from 'easy-circular-progress'
 				smspercent: 0,
 				bankingtime: 100000000000,
 				bankingpercent: 0,
-				Account: '5422818-01'
+				totalscan: '',
+				bcid: '',
+				bccode: '',
+				wateraccount: '',
+				invoicenumber: ''
+				
             }
         }
     }
@@ -177,14 +189,17 @@ import Progress from 'easy-circular-progress'
 			cancelable: true,
 		});
 		var ele = document.getElementById(element)
-		ele.value = Math.floor(value);
+		if(isNaN(value)){
+			ele.value = value;
+		}
+		else{
+			ele.value = Math.floor(value);
+		}
 		ele.dispatchEvent(event);
 	}
 
-
-
 	var blur = 0.15;
-	var rpa_time = 1000 * 120;  //1000 * 120
+	var rpa_time = 1000 * 45;  //1000 * 120
 	var ocr_time = 1000 * 10;
 	var edms_time = 1000 * 8;
 	var sms_time = 1000 * 15;
@@ -207,9 +222,37 @@ import Progress from 'easy-circular-progress'
 	var banking_started = false;
 	
 	function go(){
-		console.log('go');
+		//console.log('go');
 		var dd = new Date();
 		var now = dd.getTime();
+		
+		var preAccount = account;
+		readMessageFile(messageFile);
+		var rpa_finished = false;
+		if(preAccount!=account){
+			if(previous_status == 'succeed'){
+				console.log('succeed');
+				rpa_end = now - 1;
+				rpa_finished = true;
+			}else{
+				var blur_2 = (100 + getRndInteger(-blur*100, blur*100))/100;
+				rpa_time_2 = rpa_time * blur_2;
+				rpa_end = now + rpa_time_2;
+				setElement("rpatime", 500);
+				setElement("rpapercent", 1);
+				setTimeout(function(){
+					setElement("rpatime", rpa_time_2);
+					setElement("rpapercent", 100);
+				}, 1000);
+				
+				setElement("totalscan", counter);
+				setElement("bcid", bcid);
+				setElement("bccode", bccode);
+				setElement("wateraccount", account);
+				setElement("invoicenumber", invoicenumber);
+			}
+		}
+		
 		
 		if (rpa_end == 0){
 			var blur_2 = (100 + getRndInteger(-blur*100, blur*100))/100;
@@ -218,9 +261,10 @@ import Progress from 'easy-circular-progress'
 			setElement("rpatime", rpa_time_2);
 			setElement("rpapercent", 100);
 		}else{
-			console.log(now);
-			console.log(rpa_end);
-			if (now > rpa_end){
+			//console.log(now);
+			//console.log(rpa_end);
+			if (now > rpa_end && rpa_finished){
+				console.log('new rpa');
 				var blur_2 = (100 + getRndInteger(-blur*100, blur*100))/100;
 				rpa_time_2 = rpa_time * blur_2;
 				rpa_end = now + rpa_time_2;
@@ -245,6 +289,20 @@ import Progress from 'easy-circular-progress'
 				sms_started = false;
 				banking_started = false;
 				
+				setTimeout(function(){
+					setElement("rpatime", 500);
+					setElement("rpapercent", 99);
+				}, 500);
+				
+				setTimeout(function(){
+					setElement("rpapercent", 1);
+				}, 1500);
+				
+				setTimeout(function(){
+					setElement("rpatime", rpa_time_2);
+					setElement("rpapercent", 100);				
+				}, 2000);
+				
 				setElement("ocrtime", 500);
 				setElement("ocrpercent", 1);
 				setTimeout(function(){
@@ -252,12 +310,6 @@ import Progress from 'easy-circular-progress'
 					setElement("ocrpercent", 100);
 				}, 1000);
 				
-				setElement("rpatime", 500);
-				setElement("rpapercent", 1);
-				setTimeout(function(){
-					setElement("rpatime", rpa_time_2);
-					setElement("rpapercent", 100);
-				}, 1000);
 				setTimeout(function(){
 					setElement("edmstime", 500);
 					setElement("edmspercent", 1);
@@ -271,6 +323,11 @@ import Progress from 'easy-circular-progress'
 					setElement("bankingpercent", 0);
 				}, 1000);
 				
+				setElement("totalscan", counter);
+				setElement("bcid", bcid);
+				setElement("bccode", bccode);
+				setElement("wateraccount", account);
+				setElement("invoicenumber", invoicenumber);
 			}
 			if (!edms_started && now > ocr_end){
 				edms_started = true;
@@ -303,7 +360,7 @@ import Progress from 'easy-circular-progress'
 		}
 	}
 	
-	var t = setInterval(go, 4000);
+	var t = setInterval(go, 1000);
 	
 	//setTimeout(function(){ go(); }, 1000);
 	
@@ -314,6 +371,70 @@ import Progress from 'easy-circular-progress'
 	}, false);
 	*/
 
+	var counter;
+	var bcid;
+	var bccode;
+	var account;
+	var invoicenumber;
+	var previous_status;
+	function readMessageFile(file) {
+		var allText = readTextFile(file);
+		var allTextLines = allText.split(/\r\n|\n/);
+		for (var i=0; i<allTextLines.length; i++) {
+			var data = allTextLines[i].split('=');
+			if (data.length >= 2) {
+				if(data[0] == 'counter'){
+					counter = data[1];
+				}else if (data[0] == 'bcid'){
+					bcid = data[1];
+				}else if (data[0] == 'bccode'){
+					bccode = data[1];
+				}else if (data[0] == 'account'){
+					account = data[1];
+				}else if (data[0] == 'invoicenumber'){
+					invoicenumber = data[1];
+				}else if (data[0] == 'previous'){
+					previous_status = data[1];
+				}
+			}
+		}
+	}
+	function readTextFile(file)
+	{
+		var rawFile = new XMLHttpRequest();
+		var allText;
+		rawFile.open("GET", file, false);
+		rawFile.onreadystatechange = function ()
+		{
+			if(rawFile.readyState === 4)
+			{
+				if(rawFile.status === 200 || rawFile.status == 0)
+				{
+					allText = rawFile.responseText;
+				}
+			}
+		}
+		rawFile.send(null);
+		return(allText);
+	}
+	
+	function processData(allText) {
+		var allTextLines = allText.split(/\r\n|\n/);
+		var headers = allTextLines[0].split(',');
+		var lines = [];
+
+		for (var i=1; i<allTextLines.length; i++) {
+			var data = allTextLines[i].split(',');
+			if (data.length == headers.length) {
+				var obj = new Object();
+				for (var j=0; j<headers.length; j++) {
+					obj[headers[j]] = data[j];
+				}
+				lines.push(obj);
+			}
+		}
+		return lines;
+	}
 
 
 
