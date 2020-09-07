@@ -1,13 +1,16 @@
 <template>
 
 	<div id="app" style="display: block; height: 1200px">
-		
+		<div style="float:right">
+			<button class="login-btn">Start</button>
+		</div>
 		<div style=" margin: auto;
   width: 50%;
-  padding: 30px; 
-  
-    width: 350px;
+  padding: 10px; 
+  padding-bottom: 0px;
+    width: 300px;
     text-align: left;
+	margin-bottom: -20px;
   ">
 			<b>Total Scanned: {{totalscan}}</b>
 			<br/>
@@ -32,9 +35,9 @@
 		
 		<Progress 
 		 :transitionDuration="rpatime"
-		  :radius="50"
+		  :radius="42"
 		  :strokeWidth="10"
-		  :value="rpapercent" style="margin:20px; display: block"
+		  :value="rpapercent" style="margin:0px; display: block"
 		>
 		  <template v-slot:footer>
 			<b>Data Capture</b>
@@ -45,9 +48,9 @@
 		
 		<Progress 
 			:transitionDuration="ocrtime"
-			  :radius="50"
+			  :radius="42"
 			  :strokeWidth="10"
-			  :value="ocrpercent" style="margin:20px; display: block"
+			  :value="ocrpercent" style="margin:0px; display: block"
 			>
 		  <template v-slot:footer>
 			<b>OCR</b>
@@ -59,9 +62,9 @@
 
 		<Progress 
 		  :transitionDuration="edmstime"
-		  :radius="50"
+		  :radius="42"
 		  :strokeWidth="10"
-		  :value="edmspercent" style="margin:20px; display: block"
+		  :value="edmspercent" style="margin:0px; display: block"
 			>
 		  <template v-slot:footer>
 			<b>EDMS</b>
@@ -73,9 +76,9 @@
 
 		<Progress
 		  :transitionDuration="smstime"
-		  :radius="50"
+		  :radius="42"
 		  :strokeWidth="10"
-		  :value="smspercent" style="margin:20px; display: block"
+		  :value="smspercent" style="margin:0px; display: block"
 		>
 		  <template v-slot:footer>
 			<b>Core</b>
@@ -88,9 +91,9 @@
 		<Progress
 		   strokeColor="#FF00AA" 
 		  :transitionDuration="bankingtime"
-		  :radius="50"
+		  :radius="42"
 		  :strokeWidth="10"
-		  :value="bankingpercent" style="margin:20px; display: block"
+		  :value="bankingpercent" style="margin:0px; display: block"
 		>
 		  <template v-slot:footer>
 			<b>Banking</b>
